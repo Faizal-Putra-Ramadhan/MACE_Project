@@ -1,9 +1,11 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../../context/AuthContext';
 import { ArrowRight, GraduationCap, Stethoscope, Users2, BookOpen, Repeat } from 'lucide-react';
 
 const Beranda = () => {
   const navigate = useNavigate();
+  const { user } = useAuth();
 
   const programs = [
     {
@@ -105,10 +107,10 @@ const Beranda = () => {
               <h4 className="text-xl font-bold text-slate-900 mb-3 leading-snug">{prog.title}</h4>
               <p className="text-slate-500 mb-8 flex-1 leading-relaxed">{prog.desc}</p>
               <button 
-                onClick={() => navigate(`/daftar/${prog.id}`)}
+                onClick={() => navigate(user ? `/daftar/${prog.id}` : '/login')}
                 className="w-full flex items-center justify-center space-x-2 bg-slate-900 text-white group-hover:bg-brand-blue rounded-2xl py-4 font-bold transition-colors"
               >
-                <span>Daftar Sekarang</span>
+                <span>{user ? 'Daftar Sekarang' : 'Masuk untuk Daftar'}</span>
                 <ArrowRight size={18} />
               </button>
             </div>

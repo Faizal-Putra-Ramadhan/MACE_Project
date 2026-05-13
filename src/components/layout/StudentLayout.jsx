@@ -17,10 +17,12 @@ const StudentLayout = () => {
 
   const menuItems = [
     { name: 'Beranda', path: '/', icon: Home },
-    { name: 'Pendaftaran', path: '/daftar/A', icon: ClipboardList, match: '/daftar' },
-    { name: 'Pengumuman', path: '/pengumuman', icon: Bell },
-    { name: 'Laporan & Kartu', path: '/laporan', icon: FileText },
+    { name: 'Pendaftaran', path: '/daftar/A', icon: ClipboardList, match: '/daftar', protected: true },
+    { name: 'Pengumuman', path: '/pengumuman', icon: Bell, protected: true },
+    { name: 'Laporan & Kartu', path: '/laporan', icon: FileText, protected: true },
   ];
+
+  const visibleMenuItems = menuItems.filter(item => !item.protected || user);
 
   const handleLogout = () => {
     logout();
@@ -94,7 +96,7 @@ const StudentLayout = () => {
           </div>
 
           <nav className="space-y-2">
-            {menuItems.map((item) => {
+            {visibleMenuItems.map((item) => {
               const isActive = item.match 
                 ? location.pathname.startsWith(item.match)
                 : location.pathname === item.path;
