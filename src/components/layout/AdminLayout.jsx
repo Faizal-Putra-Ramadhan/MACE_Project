@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Outlet, Link, useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import { LayoutDashboard, FileCheck, Users, ClipboardList, BarChart3, LogOut, Settings, Menu, X } from 'lucide-react';
@@ -6,7 +6,7 @@ import { clsx } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 
 function cn(...inputs) {
-  return twMerge(clsx(inputs));
+  return twMerge(clsx(...inputs));
 }
 
 const AdminLayout = () => {

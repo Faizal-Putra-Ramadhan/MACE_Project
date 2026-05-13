@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import api from '../../api/axios';
-import { Check, X, FileText, Loader2, AlertCircle } from 'lucide-react';
+import { Loader2 } from 'lucide-react';
 
 const LaporanMahasiswa = () => {
   const [list, setList] = useState([]);

@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import api from '../../api/axios';
 import { useAuth } from '../../context/AuthContext';
-import { CheckCircle2, FileText, User, BookOpen, Upload, Loader2, Save } from 'lucide-react';
+import { CheckCircle2, FileText, Upload, Loader2, Save } from 'lucide-react';
 
 const Pengumuman = () => {
   const { user } = useAuth();
@@ -135,7 +135,7 @@ const Pengumuman = () => {
                   <textarea 
                     className="w-full bg-slate-50 border-2 border-transparent focus:border-brand-blue rounded-2xl p-4 outline-none transition-all h-24"
                     value={dataDiri.alamat_ktp}
-                    onChange={(e) => setDataDiri({...dataDiri, [f.key]: e.target.value})}
+                    onChange={(e) => setDataDiri({...dataDiri, alamat_ktp: e.target.value})}
                   ></textarea>
                </div>
                <div className="flex justify-end md:col-span-2">

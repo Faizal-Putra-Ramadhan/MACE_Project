@@ -1,13 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import api from '../../api/axios';
-import { useAuth } from '../../context/AuthContext';
 import { CheckCircle2, AlertCircle, Loader2, Upload, Search, ArrowLeft, ArrowRight } from 'lucide-react';
 
 const PendaftaranForm = () => {
   const { program } = useParams();
   const navigate = useNavigate();
-  const { user } = useAuth();
   
   const [step, setStep] = useState(1);
   const [nim, setNim] = useState('');
@@ -36,7 +34,7 @@ const PendaftaranForm = () => {
       const res = await api.get(`/validate/nim/${nim}`);
       setIsNimValid(true);
       setValidationMsg(prev => ({ ...prev, nim: `Data ditemukan: ${res.data.data.nama} (${res.data.data.pt})` }));
-    } catch (err) {
+    } catch {
       setIsNimValid(false);
       setValidationMsg(prev => ({ ...prev, nim: 'NIM tidak terdaftar di PDDikti' }));
     } finally {
@@ -51,7 +49,7 @@ const PendaftaranForm = () => {
       const res = await api.get(`/validate/nik/${nik}`);
       setIsNikValid(true);
       setValidationMsg(prev => ({ ...prev, nik: `Data valid: ${res.data.data.wilayah}` }));
-    } catch (err) {
+    } catch {
       setIsNikValid(false);
       setValidationMsg(prev => ({ ...prev, nik: 'NIK tidak valid atau bukan OAP Papua' }));
     } finally {
@@ -63,9 +61,9 @@ const PendaftaranForm = () => {
     if (!kodeKartu) return;
     setIsValidating(true);
     try {
-      const res = await api.get(`/pendaftaran/cek-kode/${kodeKartu}`);
+      await api.get(`/pendaftaran/cek-kode/${kodeKartu}`);
       setIsKodeValid(true);
-    } catch (err) {
+    } catch {
       setIsKodeValid(false);
     } finally {
       setIsValidating(false);

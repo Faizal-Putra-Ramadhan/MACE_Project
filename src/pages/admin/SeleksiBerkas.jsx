@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import api from '../../api/axios';
-import { Eye, Check, X, Search, FileText, ExternalLink, Loader2 } from 'lucide-react';
+import { Eye, Check, X, FileText, ExternalLink, Loader2 } from 'lucide-react';
 
 const SeleksiBerkas = () => {
   const [list, setList] = useState([]);
@@ -10,22 +10,22 @@ const SeleksiBerkas = () => {
   const [showModal, setShowModal] = useState(false);
   const [modalType, setModalType] = useState(''); // 'view', 'reject'
 
-  const fetchData = async () => {
-    setLoading(true);
-    try {
-      const res = await api.get('/admin/pendaftaran');
-      // Filter only submitted
-      setList(res.data.filter(p => p.status === 'submitted'));
-    } catch (err) {
-      console.error(err);
-    } finally {
-      setLoading(false);
-    }
-  };
+  const [refreshTrigger, setRefreshTrigger] = useState(0);
 
   useEffect(() => {
+    const fetchData = async () => {
+      setLoading(true);
+      try {
+        const res = await api.get('/admin/pendaftaran');
+        setList(res.data.filter(p => p.status === 'submitted'));
+      } catch (err) {
+        console.error(err);
+      } finally {
+        setLoading(false);
+      }
+    };
     fetchData();
-  }, []);
+  }, [refreshTrigger]);
 
   const handleAction = async (id, status) => {
     try {
@@ -35,9 +35,9 @@ const SeleksiBerkas = () => {
       });
       alert(`Berhasil: Status diupdate ke ${status}`);
       setShowModal(false);
-      fetchData();
+      setRefreshTrigger(prev => prev + 1);
     } catch (err) {
-      alert('Gagal update: ' + err.message);
+      alert('Gagal update: ' + (err.response?.data?.message || err.message));
     }
   };
 

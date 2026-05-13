@@ -1,5 +1,3 @@
-import React from 'react';
-
 const ManagePendaftaran = () => (
   <div className="bg-white p-10 rounded-[2.5rem] premium-shadow border border-slate-100">
      <h3 className="text-2xl font-bold mb-6">Semua Pendaftaran</h3>

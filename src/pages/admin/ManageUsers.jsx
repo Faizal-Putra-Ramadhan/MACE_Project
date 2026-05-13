@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import api from '../../api/axios';
-import { UserPlus, UserCircle, Mail, Shield, Loader2, CheckCircle, XCircle } from 'lucide-react';
+import { UserPlus, UserCircle, Shield, Loader2 } from 'lucide-react';
 import { clsx } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 
@@ -69,7 +69,7 @@ const ManageUsers = () => {
                       try {
                         await api.put('/admin/users/approve', { id: u.id });
                         window.location.reload();
-                      } catch (err) {
+                      } catch {
                         alert('Gagal menyetujui user');
                       }
                     }

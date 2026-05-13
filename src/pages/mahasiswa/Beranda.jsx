@@ -1,4 +1,3 @@
-import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import { ArrowRight, GraduationCap, Stethoscope, Users2, BookOpen, Repeat } from 'lucide-react';

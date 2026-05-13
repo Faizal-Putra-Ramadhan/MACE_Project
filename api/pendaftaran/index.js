@@ -1,5 +1,4 @@
 import Pendaftaran from '../../models/Pendaftaran.js';
-import Mahasiswa from '../../models/Mahasiswa.js';
 import DokumenPendaftaran from '../../models/DokumenPendaftaran.js';
 import { withMiddleware, verifyToken, mahasiswaOnly } from '../../lib/auth.js';
 
