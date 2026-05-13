@@ -20,6 +20,11 @@ const User = sequelize.define('users', {
         type: DataTypes.ENUM('mahasiswa', 'admin'),
         allowNull: false,
         defaultValue: 'mahasiswa'
+    },
+    is_approved: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false,
+        defaultValue: false
     }
 }, {
     freezeTableName: true,

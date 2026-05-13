@@ -1,6 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import api from '../../api/axios';
-import { UserPlus, UserCircle, Mail, Shield, Loader2 } from 'lucide-react';
+import { UserPlus, UserCircle, Mail, Shield, Loader2, CheckCircle, XCircle } from 'lucide-react';
+import { clsx } from 'clsx';
+import { twMerge } from 'tailwind-merge';
+
+function cn(...inputs) {
+  return twMerge(clsx(...inputs));
+}
 
 const ManageUsers = () => {
   const [users, setUsers] = useState([]);
@@ -41,10 +47,38 @@ const ManageUsers = () => {
               <h4 className="font-bold text-slate-900">{u.mahasiswa?.nama_lengkap || 'Administrator'}</h4>
               <p className="text-sm text-slate-500 mb-4">{u.email}</p>
               
-              <div className="flex items-center space-x-2 bg-slate-50 px-3 py-1 rounded-full border border-slate-100">
-                 <Shield size={12} className={u.role === 'admin' ? 'text-amber-500' : 'text-brand-blue'} />
-                 <span className="text-[10px] font-bold uppercase tracking-widest text-slate-600">{u.role}</span>
+              <div className="flex flex-wrap justify-center gap-2 mb-6">
+                 <div className="flex items-center space-x-2 bg-slate-50 px-3 py-1 rounded-full border border-slate-100">
+                    <Shield size={12} className={u.role === 'admin' ? 'text-amber-500' : 'text-brand-blue'} />
+                    <span className="text-[10px] font-bold uppercase tracking-widest text-slate-600">{u.role}</span>
+                 </div>
+                 {u.role === 'mahasiswa' && (
+                   <div className={cn(
+                     "flex items-center space-x-2 px-3 py-1 rounded-full border text-[10px] font-bold uppercase tracking-widest",
+                     u.is_approved ? "bg-emerald-50 border-emerald-100 text-emerald-600" : "bg-amber-50 border-amber-100 text-amber-600"
+                   )}>
+                     <span>{u.is_approved ? 'Disetujui' : 'Menunggu'}</span>
+                   </div>
+                 )}
               </div>
+
+              {u.role === 'mahasiswa' && !u.is_approved && (
+                <button 
+                  onClick={async () => {
+                    if (confirm(`Setujui akun ${u.mahasiswa?.nama_lengkap || u.email}?`)) {
+                      try {
+                        await api.put('/admin/users/approve', { id: u.id });
+                        window.location.reload();
+                      } catch (err) {
+                        alert('Gagal menyetujui user');
+                      }
+                    }
+                  }}
+                  className="w-full py-2 bg-emerald-600 text-white rounded-xl text-xs font-bold hover:bg-emerald-700 transition-colors"
+                >
+                  Setujui Akun
+                </button>
+              )}
            </div>
          ))}
       </div>

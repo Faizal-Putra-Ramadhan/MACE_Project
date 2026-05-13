@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { Mail, Lock, Loader2, ArrowRight } from 'lucide-react';
 
@@ -98,8 +98,11 @@ const LoginPage = () => {
             </button>
           </form>
           
-          <div className="mt-10 text-center">
-            <p className="text-slate-400 text-sm font-medium">
+          <div className="mt-10 text-center space-y-4">
+            <p className="text-slate-500 text-sm font-medium">
+              Belum punya akun? <Link to="/register" className="text-brand-blue font-bold">Daftar sekarang</Link>
+            </p>
+            <p className="text-slate-400 text-xs font-medium">
               Butuh bantuan akses? Hubungi <span className="text-brand-blue">Admin MACE</span>
             </p>
           </div>

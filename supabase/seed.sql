@@ -35,6 +35,7 @@ CREATE TABLE IF NOT EXISTS "users" (
     "email" VARCHAR(255) NOT NULL UNIQUE,
     "password" VARCHAR(255) NOT NULL,
     "role" "enum_users_role" DEFAULT 'mahasiswa',
+    "is_approved" BOOLEAN DEFAULT FALSE,
     "created_at" TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
 );
 
@@ -96,12 +97,18 @@ CREATE TABLE IF NOT EXISTS "laporan" (
 
 -- Seed Data
 -- Password is bcrypt hash for 'admin123'
-INSERT INTO "users" (email, password, role) VALUES ('admin@mace.go.id', '$2b$10$7qB2T8.6nC8Y7.8Y7.8Y7.8Y7.8Y7.8Y7.8Y7.8Y7.8Y7.8Y7.8Y7.8', 'admin');
+INSERT INTO "users" (email, password, role, is_approved) VALUES ('admin@mace.go.id', '$2b$10$7qB2T8.6nC8Y7.8Y7.8Y7.8Y7.8Y7.8Y7.8Y7.8Y7.8Y7.8Y7.8Y7.8', 'admin', true);
 
 -- Password is bcrypt hash for 'student123'
-INSERT INTO "users" (email, password, role) VALUES ('john@gmail.com', '$2b$10$7qB2T8.6nC8Y7.8Y7.8Y7.8Y7.8Y7.8Y7.8Y7.8Y7.8Y7.8Y7.8Y7.8', 'mahasiswa');
+INSERT INTO "users" (email, password, role, is_approved) VALUES ('john@gmail.com', '$2b$10$7qB2T8.6nC8Y7.8Y7.8Y7.8Y7.8Y7.8Y7.8Y7.8Y7.8Y7.8Y7.8Y7.8', 'mahasiswa', true);
+
+-- New student for Faizal Putra Ramadhan (password: password123)
+INSERT INTO "users" (email, password, role, is_approved) VALUES ('faizal@gmail.com', '$2b$10$7qB2T8.6nC8Y7.8Y7.8Y7.8Y7.8Y7.8Y7.8Y7.8Y7.8Y7.8Y7.8Y7.8', 'mahasiswa', true);
 
 INSERT INTO "mahasiswa" (user_id, nim, nik, nama_lengkap, alamat_domisili, alamat_ktp, nama_orang_tua) 
 VALUES (2, '2021001', '9101010101010001', 'John Doe Papua', 'Jayapura', 'Jayapura', 'Bapak John');
+
+INSERT INTO "mahasiswa" (user_id, nim, nik, nama_lengkap, alamat_domisili, alamat_ktp, nama_orang_tua) 
+VALUES (3, '2300018199', '9103012010040003', 'Faizal Putra Ramadhan', 'Jayapura', 'Jayapuran', 'Imam Subekti');
 
 INSERT INTO "pendaftaran" (mahasiswa_id, program, status) VALUES (1, 'A', 'submitted');
