@@ -5,10 +5,11 @@ import User from '../../models/User.js';
 import { withMiddleware } from '../../lib/auth.js';
 
 async function handler(req, res) {
-    if (req.method !== 'POST') {
-        console.log(`[Login] Method ${req.method} not allowed`);
+    if (req.method !== 'POST' && req.method !== 'GET') {
         return res.status(405).json({ message: `Method ${req.method} not allowed` });
     }
+
+    console.log(`[Login] Method: ${req.method}, Body:`, req.body);
 
     const { email, password } = req.body;
 
