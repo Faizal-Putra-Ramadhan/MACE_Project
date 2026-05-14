@@ -8,39 +8,32 @@ const Beranda = () => {
 
   const programs = [
     {
+      id: 'D',
+      title: 'Pendidikan S3 (Doktoral)',
+      desc: 'Bantuan studi doktoral khusus untuk Orang Asli Papua.',
+      icon: BookOpen,
+      color: 'bg-amber-500',
+    },
+    {
       id: 'A',
-      title: 'Bantuan Pembiayaan Studi Akhir',
-      desc: 'Untuk mahasiswa yang sedang mengerjakan skripsi atau tugas akhir.',
+      title: 'Studi Akhir/Tugas Akhir/Skripsi',
+      desc: 'Untuk mahasiswa yang sedang dalam masa penyelesaian tugas akhir atau skripsi.',
       icon: GraduationCap,
       color: 'bg-blue-500',
     },
     {
       id: 'B',
-      title: 'Bantuan Pembiayaan Koas',
-      desc: 'Khusus mahasiswa kedokteran yang sedang menjalani masa koas (durasi 2 tahun).',
+      title: 'Koas (Khusus Kedokteran)',
+      desc: 'Khusus mahasiswa kedokteran yang sedang menjalani masa profesi dokter (Koas).',
       icon: Stethoscope,
       color: 'bg-rose-500',
     },
     {
       id: 'C',
-      title: 'Pendidikan Spesialis Dokter OAP',
-      desc: 'Program spesialisasi bagi dokter Orang Asli Papua dengan durasi maksimal 6 tahun.',
+      title: 'Spesialis (Dokter Spesialis)',
+      desc: 'Program bantuan pendidikan spesialisasi bagi dokter Orang Asli Papua.',
       icon: Users2,
       color: 'bg-emerald-500',
-    },
-    {
-      id: 'D',
-      title: 'Pendidikan S3 bagi Dosen OAP',
-      desc: 'Bantuan studi doktoral khusus untuk dosen Orang Asli Papua (durasi 2 tahun).',
-      icon: BookOpen,
-      color: 'bg-amber-500',
-    },
-    {
-      id: 'E',
-      title: 'Pendaftaran Bantuan Lanjutan',
-      desc: 'Khusus penerima tahun lalu yang ingin mendaftar kembali (perlu kode kartu digital).',
-      icon: Repeat,
-      color: 'bg-indigo-500',
     },
   ];
 

@@ -20,11 +20,10 @@ const PendaftaranForm = () => {
   const [isKodeValid, setIsKodeValid] = useState(null);
 
   const programs = {
-    'A': 'Studi Akhir',
-    'B': 'Koas',
-    'C': 'Spesialis',
-    'D': 'S3 Dosen',
-    'E': 'Bantuan Lanjutan'
+    'A': 'Studi Akhir/Tugas Akhir/Skripsi',
+    'B': 'Koas (Khusus Kedokteran)',
+    'C': 'Spesialis (Dokter Spesialis)',
+    'D': 'S3 (Doktoral)'
   };
 
   const handleValidateNim = async () => {
@@ -176,29 +175,11 @@ const PendaftaranForm = () => {
               </div>
             </div>
 
-            {program === 'E' && (
-              <div className="space-y-4 pt-4 border-t border-slate-100">
-                <label className="block text-sm font-bold text-slate-700">Kode Kartu Digital (Tahun Lalu)</label>
-                <div className="relative max-w-md">
-                  <input 
-                    type="text" 
-                    className={`w-full bg-slate-50 border-2 rounded-2xl py-4 px-4 pr-12 outline-none transition-all ${isKodeValid === true ? 'border-emerald-500' : isKodeValid === false ? 'border-red-500' : 'border-transparent focus:border-brand-blue'}`}
-                    placeholder="MACE-2023-XXXX"
-                    value={kodeKartu}
-                    onChange={(e) => setKodeKartu(e.target.value)}
-                  />
-                  <button onClick={handleValidateKode} className="absolute right-3 top-1/2 -translate-y-1/2 p-2 text-brand-blue hover:bg-brand-blue/10 rounded-xl transition-colors">
-                    <Search size={20} />
-                  </button>
-                </div>
-                {isKodeValid === false && <p className="text-red-600 text-sm font-medium">Kode tidak valid atau data pendaftaran tahun lalu belum selesai.</p>}
-              </div>
-            )}
 
             <div className="flex justify-end pt-8">
                <button 
                 onClick={() => setStep(2)}
-                disabled={!isNimValid || !isNikValid || (program === 'E' && !isKodeValid)}
+                disabled={!isNimValid || !isNikValid}
                 className="gradient-blue text-white px-10 py-4 rounded-2xl font-bold premium-shadow disabled:opacity-50 disabled:cursor-not-allowed flex items-center space-x-2"
                >
                  <span>Lanjutkan ke Unggah Berkas</span>

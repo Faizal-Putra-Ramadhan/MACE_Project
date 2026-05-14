@@ -8,7 +8,13 @@ async function handler(req, res) {
         '2021001': { nama: 'John Doe Papua', status: 'Aktif', pt: 'Universitas Cenderawasih' },
         '2021002': { nama: 'Jane Smith Papua', status: 'Aktif', pt: 'Universitas Papua' },
         '2021003': { nama: 'Papua Merdeka', status: 'Aktif', pt: 'Institut Seni Budaya Papua' },
-        '2300018199': { nama: 'Faizal Putra Ramadhan', status: 'Aktif', pt: 'Universitas Cenderawasih' }
+        '2300018199': { 
+            nama: 'Faizal Putra Ramadhan', 
+            status: 'Aktif', 
+            pt: 'Universitas Ahmad Dahlan', 
+            prodi: 'Informatika', 
+            ipk: '3.88' 
+        }
     };
 
     if (validNims[nim]) {
