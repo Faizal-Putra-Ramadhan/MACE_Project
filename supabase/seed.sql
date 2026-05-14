@@ -7,7 +7,7 @@ DO $$ BEGIN
         CREATE TYPE "enum_pendaftaran_program" AS ENUM('A', 'B', 'C', 'D', 'E');
     END IF;
     IF NOT EXISTS (SELECT 1 FROM pg_type WHERE typname = 'enum_pendaftaran_status') THEN
-        CREATE TYPE "enum_pendaftaran_status" AS ENUM('draft', 'submitted', 'lolos_berkas', 'ditolak', 'selesai');
+        CREATE TYPE "enum_pendaftaran_status" AS ENUM('draft', 'submitted', 'lolos_berkas', 'ditolak', 'selesai', 'revisi');
     END IF;
     IF NOT EXISTS (SELECT 1 FROM pg_type WHERE typname = 'enum_dokumen_pendaftaran_jenis_dokumen') THEN
         CREATE TYPE "enum_dokumen_pendaftaran_jenis_dokumen" AS ENUM('surat_permohonan', 'rab', 'kartu_mahasiswa', 'ktp', 'sk_aktif', 'khs', 'kartu_keluarga', 'pasfoto', 'rekening');
