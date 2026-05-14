@@ -1,7 +1,7 @@
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
-import User from '../../models/User.js';
 import Mahasiswa from '../../models/Mahasiswa.js';
+import User from '../../models/User.js';
 import { withMiddleware } from '../../lib/auth.js';
 
 async function handler(req, res) {
