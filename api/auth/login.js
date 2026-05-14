@@ -9,34 +9,36 @@ async function handler(req, res) {
         return res.status(405).json({ message: 'Method not allowed' });
     }
 
-    const { email, password } = req.body;
+    const { password } = req.body;
+    const email = req.body.email ? req.body.email.trim().toLowerCase() : '';
 
     try {
-        if (!process.env.DATABASE_URL) {
-            throw new Error('DATABASE_URL is not defined');
-        }
-        if (!process.env.JWT_SECRET) {
-            throw new Error('JWT_SECRET is not defined');
+        if (!process.env.DATABASE_URL || !process.env.JWT_SECRET) {
+            throw new Error('Missing environment variables');
         }
 
         const user = await User.findOne({ 
             where: { email },
             include: [{ model: Mahasiswa }] 
         });
-        
-        if (!user) return res.status(404).json({ message: 'User not found' });
+
+        if (!user) {
+            return res.status(400).json({ message: 'Email tidak ditemukan' });
+        }
+
+        if (!user.is_approved) {
+            return res.status(400).json({ message: 'Akun Anda belum disetujui oleh admin' });
+        }
 
         const isMatch = await bcrypt.compare(password, user.password);
-        if (!isMatch) return res.status(400).json({ message: 'Invalid credentials' });
-
-        if (user.role === 'mahasiswa' && !user.is_approved) {
-            return res.status(403).json({ message: 'Akun Anda sedang menunggu persetujuan Admin.' });
+        if (!isMatch) {
+            return res.status(400).json({ message: 'Password salah' });
         }
 
         const token = jwt.sign(
-            { id: user.id, role: user.role },
+            { id: user.id, email: user.email, role: user.role },
             process.env.JWT_SECRET,
-            { expiresIn: '1d' }
+            { expiresIn: '24h' }
         );
 
         res.status(200).json({
@@ -45,15 +47,14 @@ async function handler(req, res) {
                 id: user.id,
                 email: user.email,
                 role: user.role,
-                mahasiswa: user.mahasiswa
+                nama: user.role === 'admin' ? 'Admin' : (user.mahasiswa ? user.mahasiswa.nama_lengkap : 'User')
             }
         });
     } catch (error) {
         console.error('[Login Error]:', error);
         res.status(500).json({ 
             message: 'Internal Server Error',
-            error: error.message,
-            stack: process.env.NODE_ENV === 'development' ? error.stack : undefined
+            error: error.message
         });
     }
 }
