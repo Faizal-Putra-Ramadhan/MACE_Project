@@ -86,17 +86,17 @@ CREATE TABLE IF NOT EXISTS "laporan" (
 -- 3. Seed Data (Menggunakan ON CONFLICT agar tidak error jika dijalankan ulang)
 -- Admin Account (is_approved harus TRUE)
 INSERT INTO "users" (email, password, role, is_approved) 
-VALUES ('admin@mace.go.id', '$2a$10$mC3msT6YUXsSgtMOPDlsf.7Z7F.XvS7oG6ZpGZpGZpGZpGZpGZpG', 'admin', true)
+VALUES ('admin@mace.go.id', '$2a$10$vI8tmZH.AYVTrJ3BeWqRAux6Ka/8mp1icjHEwVG69.S8m.C94DGl.', 'admin', true)
 ON CONFLICT (email) DO UPDATE SET is_approved = true, role = 'admin', password = EXCLUDED.password;
 
 -- User John
 INSERT INTO "users" (email, password, role, is_approved) 
-VALUES ('john@gmail.com', '$2a$10$mC3msT6YUXsSgtMOPDlsf.7Z7F.XvS7oG6ZpGZpGZpGZpGZpGZpG', 'mahasiswa', true)
+VALUES ('john@gmail.com', '$2a$10$vI8tmZH.AYVTrJ3BeWqRAux6Ka/8mp1icjHEwVG69.S8m.C94DGl.', 'mahasiswa', true)
 ON CONFLICT (email) DO UPDATE SET password = EXCLUDED.password;
 
 -- User Faizal (Data Collector)
 INSERT INTO "users" (email, password, role, is_approved) 
-VALUES ('faizal@gmail.com', '$2a$10$mC3msT6YUXsSgtMOPDlsf.7Z7F.XvS7oG6ZpGZpGZpGZpGZpGZpG', 'mahasiswa', true)
+VALUES ('faizal@gmail.com', '$2a$10$vI8tmZH.AYVTrJ3BeWqRAux6Ka/8mp1icjHEwVG69.S8m.C94DGl.', 'mahasiswa', true)
 ON CONFLICT (email) DO UPDATE SET password = EXCLUDED.password;
 
 -- 4. Seed Data Mahasiswa (Gunakan subquery untuk mendapatkan ID User yang tepat)
