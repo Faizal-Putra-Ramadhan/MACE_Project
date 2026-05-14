@@ -26,6 +26,10 @@ const Pendaftaran = sequelize.define('pendaftaran', {
         type: DataTypes.TEXT,
         allowNull: true
     },
+    jumlah_dana: {
+        type: DataTypes.DECIMAL(15, 2),
+        allowNull: true
+    },
     kode_kartu: {
         type: DataTypes.STRING,
         allowNull: true,
