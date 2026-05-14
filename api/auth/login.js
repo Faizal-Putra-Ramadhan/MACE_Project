@@ -47,7 +47,10 @@ async function handler(req, res) {
                 id: user.id,
                 email: user.email,
                 role: user.role,
-                nama: user.role === 'admin' ? 'Admin' : (user.mahasiswa ? user.mahasiswa.nama_lengkap : 'User')
+                nama: user.role === 'admin' ? 'Admin' : (user.mahasiswa ? user.mahasiswa.nama_lengkap : 'User'),
+                nim: user.mahasiswa ? user.mahasiswa.nim : null,
+                pt: user.mahasiswa ? user.mahasiswa.pt : null,
+                prodi: user.mahasiswa ? user.mahasiswa.prodi : null
             }
         });
     } catch (error) {

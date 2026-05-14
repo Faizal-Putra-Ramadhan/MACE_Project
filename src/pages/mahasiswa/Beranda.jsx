@@ -6,7 +6,7 @@ const Beranda = () => {
   const navigate = useNavigate();
   const { user } = useAuth();
 
-  const programs = [
+  const allPrograms = [
     {
       id: 'D',
       title: 'Pendidikan S3 (Doktoral)',
@@ -36,6 +36,26 @@ const Beranda = () => {
       color: 'bg-emerald-500',
     },
   ];
+
+  // Filter logic: Admin sees all, students filtered by prodi
+  const programs = allPrograms.filter(prog => {
+    if (!user || user.role === 'admin') return true;
+    
+    const prodi = user.prodi?.toLowerCase() || '';
+    
+    // Logic for Informatia S1 (like Faizal)
+    if (prodi.includes('informatika')) {
+      // Hide S3, Koas, and Spesialis
+      return prog.id === 'A';
+    }
+    
+    // Logic for Kedokteran
+    if (prodi.includes('kedokteran') || prodi.includes('dokter')) {
+      return ['A', 'B', 'C'].includes(prog.id);
+    }
+
+    return true; // Default show all for others
+  });
 
   return (
     <div className="space-y-12">

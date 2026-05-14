@@ -37,6 +37,8 @@ CREATE TABLE IF NOT EXISTS "mahasiswa" (
     "alamat_domisili" TEXT,
     "alamat_ktp" TEXT,
     "nama_orang_tua" VARCHAR(255),
+    "perguruan_tinggi" VARCHAR(255),
+    "program_studi" VARCHAR(255),
     "created_at" TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
 );
 
@@ -106,10 +108,10 @@ VALUES (
     '2021001', '9101010101010001', 'John Doe Papua', 'Jayapura', 'Jayapura', 'Bapak John'
 ) ON CONFLICT (nim) DO NOTHING;
 
-INSERT INTO "mahasiswa" (user_id, nim, nik, nama_lengkap, alamat_domisili, alamat_ktp, nama_orang_tua) 
+INSERT INTO "mahasiswa" (user_id, nim, nik, nama_lengkap, alamat_domisili, alamat_ktp, nama_orang_tua, perguruan_tinggi, program_studi) 
 VALUES (
     (SELECT id FROM "users" WHERE email = 'faizal@gmail.com'), 
-    '2300018199', '9103012010040003', 'Faizal Putra Ramadhan', 'Jayapura', 'Jayapuran', 'Imam Subekti'
+    '2300018199', '9103012010040003', 'Faizal Putra Ramadhan', 'Jayapura', 'Jayapuran', 'Imam Subekti', 'Universitas Ahmad Dahlan', 'Informatika'
 ) ON CONFLICT (nim) DO NOTHING;
 
 -- 5. Seed Pendaftaran

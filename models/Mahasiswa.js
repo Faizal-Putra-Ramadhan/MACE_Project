@@ -38,6 +38,14 @@ const Mahasiswa = sequelize.define('mahasiswa', {
     nama_orang_tua: {
         type: DataTypes.STRING,
         allowNull: true
+    },
+    perguruan_tinggi: {
+        type: DataTypes.STRING,
+        allowNull: true
+    },
+    program_studi: {
+        type: DataTypes.STRING,
+        allowNull: true
     }
 }, {
     freezeTableName: true,
