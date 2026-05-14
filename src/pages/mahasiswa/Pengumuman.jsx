@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import api from '../../api/axios';
 import { useAuth } from '../../context/AuthContext';
-import { CheckCircle2, FileText, Upload, Loader2, Save } from 'lucide-react';
+import { CheckCircle2, FileText, Upload, Loader2, Save, Printer, CreditCard } from 'lucide-react';
 
 const Pengumuman = () => {
   const { user } = useAuth();
@@ -90,85 +90,30 @@ const Pengumuman = () => {
     );
   }
 
-  if (pendaftaran.status === 'selesai') {
-    return (
-      <div className="space-y-10 animate-in fade-in duration-700">
-        <section className="bg-gradient-to-r from-emerald-600 to-teal-600 rounded-[2.5rem] p-12 text-white premium-shadow relative overflow-hidden">
-           <div className="relative z-10">
-              <h2 className="text-4xl font-bold mb-4">Selamat, Dana Telah Cair! 🎊</h2>
-              <p className="text-emerald-50 text-lg max-w-xl leading-relaxed">
-                Pendaftaran bantuan dana MACE Anda telah disetujui sepenuhnya. Dana telah ditransfer ke rekening yang Anda daftarkan.
-              </p>
-           </div>
-           <CheckCircle2 size={240} className="absolute -right-10 -bottom-10 opacity-10" />
-        </section>
-
-        <div className="grid md:grid-cols-3 gap-8">
-           <div className="md:col-span-2 space-y-8">
-              <div className="bg-white rounded-[2rem] p-8 border border-slate-100">
-                 <h4 className="text-slate-400 font-bold text-xs uppercase tracking-widest mb-6">Rincian Penerimaan</h4>
-                 <div className="flex items-center justify-between p-6 bg-slate-50 rounded-2xl">
-                    <span className="text-slate-600 font-medium">Total Dana Bantuan</span>
-                    <span className="text-3xl font-black text-slate-900">Rp {Number(pendaftaran.jumlah_dana).toLocaleString('id-ID')}</span>
-                 </div>
-              </div>
-
-              <div className="bg-slate-900 rounded-[2rem] p-10 text-white relative overflow-hidden group">
-                 <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-8">
-                    <div className="space-y-4">
-                       <h4 className="text-2xl font-bold">Kartu Digital MACE</h4>
-                       <p className="text-slate-400">Gunakan kartu ini sebagai bukti penerima bantuan resmi dari Pemerintah Provinsi Papua.</p>
-                       <button 
-                        onClick={() => window.print()}
-                        className="bg-brand-gold text-brand-blue px-8 py-4 rounded-2xl font-bold hover:scale-105 transition-transform"
-                       >
-                          Cetak Kartu Digital
-                       </button>
-                    </div>
-                    <div className="w-64 h-40 bg-white/5 border border-white/10 rounded-2xl p-6 backdrop-blur-sm group-hover:border-brand-gold/50 transition-colors">
-                       <div className="flex justify-between items-start mb-6">
-                          <div className="w-8 h-8 bg-brand-gold rounded-full"></div>
-                          <span className="text-[8px] font-bold text-slate-500 uppercase tracking-widest">MACE CARD 2024</span>
-                       </div>
-                       <p className="text-xs font-bold mb-1">{user?.mahasiswa?.nama_lengkap}</p>
-                       <p className="text-[10px] text-slate-400 mb-4">{user?.mahasiswa?.nim}</p>
-                       <div className="h-2 w-full bg-brand-gold/20 rounded-full overflow-hidden">
-                          <div className="h-full bg-brand-gold w-3/4"></div>
-                       </div>
-                    </div>
-                 </div>
-              </div>
-           </div>
-
-           <div className="bg-brand-blue/5 border border-brand-blue/10 rounded-[2rem] p-8">
-              <h4 className="font-bold text-brand-blue mb-6">Informasi Lanjutan</h4>
-              <ul className="space-y-4 text-sm text-slate-600">
-                 <li className="flex items-start space-x-3">
-                    <div className="mt-1 w-1.5 h-1.5 bg-brand-blue rounded-full shrink-0"></div>
-                    <span>Simpan kartu digital sebagai syarat pelaporan penggunaan dana.</span>
-                 </li>
-                 <li className="flex items-start space-x-3">
-                    <div className="mt-1 w-1.5 h-1.5 bg-brand-blue rounded-full shrink-0"></div>
-                    <span>Laporan pertanggungjawaban wajib diunggah maksimal 30 hari setelah dana diterima.</span>
-                 </li>
-              </ul>
-           </div>
-        </div>
-      </div>
-    );
-  }
-
   return (
     <div className="space-y-10">
       <section className="bg-emerald-50 border border-emerald-100 rounded-[2rem] p-10 flex flex-col md:flex-row items-center gap-8">
          <div className="w-20 h-20 bg-emerald-100 text-emerald-600 rounded-full flex-shrink-0 flex items-center justify-center">
             <CheckCircle2 size={40} />
          </div>
-         <div>
-            <h3 className="text-3xl font-bold text-emerald-900 mb-2">Selamat! Anda Lolos Seleksi Berkas</h3>
-            <p className="text-emerald-700 leading-relaxed">
-              Tahap selanjutnya adalah melengkapi data diri dan data pendidikan secara lengkap untuk proses pencairan dana bantuan MACE.
+         <div className="flex-1">
+            <h3 className="text-3xl font-bold text-emerald-900 mb-2">Selamat! Anda Lolos Seleksi Administrasi</h3>
+            <p className="text-emerald-700 leading-relaxed mb-4">
+               Pendaftaran Anda telah disetujui. Silakan lengkapi data di bawah untuk proses pencairan dana.
             </p>
+            <div className="flex flex-wrap gap-4">
+               <div className="bg-white/50 px-4 py-2 rounded-xl border border-emerald-200">
+                  <p className="text-[10px] uppercase font-bold text-emerald-600">Total Bantuan Dana</p>
+                  <p className="text-xl font-bold text-slate-900">Rp {new Intl.NumberFormat('id-ID').format(pendaftaran.nominal_dana || 0)}</p>
+               </div>
+               <button 
+                  onClick={() => window.print()}
+                  className="bg-emerald-600 text-white px-6 py-2 rounded-xl font-bold flex items-center space-x-2 hover:bg-emerald-700 transition-colors"
+               >
+                  <Printer size={18} />
+                  <span>Cetak Kartu Digital</span>
+               </button>
+            </div>
          </div>
       </section>
 

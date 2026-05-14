@@ -8,7 +8,8 @@ const SeleksiBerkas = () => {
   const [selected, setSelected] = useState(null);
   const [rejectionReason, setRejectionReason] = useState('');
   const [showModal, setShowModal] = useState(false);
-  const [modalType, setModalType] = useState(''); // 'view', 'reject'
+  const [modalType, setModalType] = useState(''); // 'view', 'reject', 'approve'
+  const [nominalDana, setNominalDana] = useState(0);
 
   const [refreshTrigger, setRefreshTrigger] = useState(0);
 
@@ -32,7 +33,8 @@ const SeleksiBerkas = () => {
       const token = localStorage.getItem('token');
       await api.put(`/admin/pendaftaran/${id}/status?token=${token}`, { 
         status, 
-        alasan_penolakan: status === 'ditolak' ? rejectionReason : null 
+        alasan_penolakan: status === 'ditolak' ? rejectionReason : null,
+        nominal_dana: status === 'lolos_berkas' ? nominalDana : null
       });
       alert(`Berhasil: Status diupdate ke ${status}`);
       setShowModal(false);
@@ -78,7 +80,7 @@ const SeleksiBerkas = () => {
                          <Eye size={18} />
                       </button>
                       <button 
-                        onClick={() => handleAction(item.id, 'lolos_berkas')}
+                        onClick={() => { setSelected(item); setModalType('approve'); setShowModal(true); setNominalDana(15000000); }}
                         className="p-2 bg-emerald-50 text-emerald-600 rounded-lg hover:bg-emerald-600 hover:text-white transition-all"
                       >
                          <Check size={18} />
@@ -139,8 +141,27 @@ const SeleksiBerkas = () => {
                              </div>
                           ))}
                        </div>
-                    </div>
-                 ) : (
+                     </div>
+                  ) : modalType === 'approve' ? (
+                     <div className="space-y-6">
+                        <p className="text-slate-600">Setujui berkas <strong>{selected?.mahasiswa?.nama_lengkap}</strong> dan tentukan nominal bantuan dana:</p>
+                        <div className="space-y-2">
+                           <label className="text-sm font-bold text-slate-500 uppercase">Nominal Dana (IDR)</label>
+                           <input 
+                              type="number" 
+                              className="w-full bg-slate-50 border-2 border-slate-100 focus:border-emerald-500 rounded-2xl p-4 outline-none text-2xl font-bold text-slate-900"
+                              value={nominalDana}
+                              onChange={(e) => setNominalDana(e.target.value)}
+                           />
+                        </div>
+                        <button 
+                         onClick={() => handleAction(selected.id, 'lolos_berkas')}
+                         className="w-full bg-emerald-600 text-white py-4 rounded-2xl font-bold shadow-lg shadow-emerald-200"
+                        >
+                           Konfirmasi Persetujuan
+                        </button>
+                     </div>
+                  ) : (
                     <div className="space-y-6">
                        <p className="text-slate-600">Berikan alasan penolakan berkas kepada mahasiswa <strong>{selected?.mahasiswa?.nama_lengkap}</strong>:</p>
                        <textarea 

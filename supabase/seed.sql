@@ -60,7 +60,6 @@ CREATE TABLE IF NOT EXISTS "pendaftaran" (
     "program" "enum_pendaftaran_program" NOT NULL,
     "status" "enum_pendaftaran_status" DEFAULT 'submitted',
     "alasan_penolakan" TEXT,
-    "jumlah_dana" DECIMAL(15, 2),
     "kode_kartu" VARCHAR(255) UNIQUE,
     "created_at" TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
 );

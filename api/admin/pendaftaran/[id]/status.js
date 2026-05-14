@@ -26,6 +26,7 @@ async function handler(req, res) {
 
         pendaftaran.status = status;
         pendaftaran.alasan_penolakan = alasan_penolakan || null;
+        pendaftaran.nominal_dana = nominal_dana || pendaftaran.nominal_dana;
         await pendaftaran.save();
 
         res.status(200).json({ message: 'Status berhasil diperbarui' });
