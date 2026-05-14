@@ -29,7 +29,8 @@ const SeleksiBerkas = () => {
 
   const handleAction = async (id, status) => {
     try {
-      await api.put(`/admin/pendaftaran/${id}/status`, { 
+      const token = localStorage.getItem('token');
+      await api.put(`/admin/pendaftaran/${id}/status?token=${token}`, { 
         status, 
         alasan_penolakan: status === 'ditolak' ? rejectionReason : null 
       });
