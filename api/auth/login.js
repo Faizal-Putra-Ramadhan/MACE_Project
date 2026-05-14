@@ -10,6 +10,13 @@ async function handler(req, res) {
     const { email, password } = req.body;
 
     try {
+        if (!process.env.DATABASE_URL) {
+            throw new Error('DATABASE_URL is not defined');
+        }
+        if (!process.env.JWT_SECRET) {
+            throw new Error('JWT_SECRET is not defined');
+        }
+
         const user = await User.findOne({ 
             where: { email },
             include: [{ model: Mahasiswa }] 
@@ -40,7 +47,12 @@ async function handler(req, res) {
             }
         });
     } catch (error) {
-        res.status(500).json({ message: error.message });
+        console.error('[Login Error]:', error);
+        res.status(500).json({ 
+            message: 'Internal Server Error',
+            error: error.message,
+            stack: process.env.NODE_ENV === 'development' ? error.stack : undefined
+        });
     }
 }
 
