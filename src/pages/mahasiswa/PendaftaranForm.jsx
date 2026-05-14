@@ -31,8 +31,12 @@ const PendaftaranForm = () => {
     setIsValidating(true);
     try {
       const res = await api.get(`/validate/nim/${nim}`);
+      const d = res.data.data;
       setIsNimValid(true);
-      setValidationMsg(prev => ({ ...prev, nim: `Data ditemukan: ${res.data.data.nama} (${res.data.data.pt})` }));
+      setValidationMsg(prev => ({ 
+        ...prev, 
+        nim: `Data ditemukan: ${d.nama} (${d.pt}) - Prodi: ${d.prodi}, IPK: ${d.ipk}` 
+      }));
     } catch {
       setIsNimValid(false);
       setValidationMsg(prev => ({ ...prev, nim: 'NIM tidak terdaftar di PDDikti' }));

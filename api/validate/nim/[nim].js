@@ -5,9 +5,9 @@ async function handler(req, res) {
     
     // Mock Data
     const validNims = {
-        '2021001': { nama: 'John Doe Papua', status: 'Aktif', pt: 'Universitas Cenderawasih' },
-        '2021002': { nama: 'Jane Smith Papua', status: 'Aktif', pt: 'Universitas Papua' },
-        '2021003': { nama: 'Papua Merdeka', status: 'Aktif', pt: 'Institut Seni Budaya Papua' },
+        '2021001': { nama: 'John Doe Papua', status: 'Aktif', pt: 'Universitas Cenderawasih', prodi: 'Hukum', ipk: '3.50' },
+        '2021002': { nama: 'Jane Smith Papua', status: 'Aktif', pt: 'Universitas Papua', prodi: 'Teknik Sipil', ipk: '3.75' },
+        '2021003': { nama: 'Papua Merdeka', status: 'Aktif', pt: 'Institut Seni Budaya Papua', prodi: 'Seni Tari', ipk: '3.90' },
         '2300018199': { 
             nama: 'Faizal Putra Ramadhan', 
             status: 'Aktif', 
