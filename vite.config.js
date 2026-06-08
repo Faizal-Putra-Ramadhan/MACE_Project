@@ -11,16 +11,8 @@ export default defineConfig({
     babel({ presets: [reactCompilerPreset()] })
   ],
   build: {
-    chunkSizeWarningLimit: 2000,
-    rolldownOptions: {
-      output: {
-        // Fungsi ini akan memisahkan library besar dari node_modules menjadi file tersendiri
-        manualChunks(id) {
-          if (id.includes('node_modules')) {
-            return id.toString().split('node_modules/')[1].split('/')[0].toString();
-          }
-        },
-      },
-    },
+    // KITA HAPUS manualChunks yang kemarin bikin file pecah banyak.
+    // Sebagai gantinya, kita cuma menaikkan batas warning agar Vercel tidak protes.
+    chunkSizeWarningLimit: 1000, 
   },
 })
