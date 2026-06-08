@@ -11,6 +11,7 @@ export default defineConfig({
     babel({ presets: [reactCompilerPreset()] })
   ],
   build: {
+    chunkSizeWarningLimit: 2000,
     rolldownOptions: {
       output: {
         // Fungsi ini akan memisahkan library besar dari node_modules menjadi file tersendiri
