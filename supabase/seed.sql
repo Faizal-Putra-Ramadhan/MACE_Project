@@ -85,23 +85,22 @@ CREATE TABLE IF NOT EXISTS "laporan" (
     "updatedAt" TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
 );
 
--- 3. Seed Data (Menggunakan ON CONFLICT agar tidak error jika dijalankan ulang)
--- Admin Account (is_approved harus TRUE)
 INSERT INTO "users" (email, password, role, is_approved) 
 VALUES ('admin@mace.go.id', '$2a$10$vI8tmZH.AYVTrJ3BeWqRAux6Ka/8mp1icjHEwVG69.S8m.C94DGl.', 'admin', true)
 ON CONFLICT (email) DO UPDATE SET is_approved = true, role = 'admin', password = EXCLUDED.password;
 
--- User John
 INSERT INTO "users" (email, password, role, is_approved) 
 VALUES ('john@gmail.com', '$2a$10$vI8tmZH.AYVTrJ3BeWqRAux6Ka/8mp1icjHEwVG69.S8m.C94DGl.', 'mahasiswa', true)
 ON CONFLICT (email) DO UPDATE SET password = EXCLUDED.password;
 
--- User Faizal (Data Collector)
 INSERT INTO "users" (email, password, role, is_approved) 
 VALUES ('faizal@gmail.com', '$2a$10$vI8tmZH.AYVTrJ3BeWqRAux6Ka/8mp1icjHEwVG69.S8m.C94DGl.', 'mahasiswa', true)
 ON CONFLICT (email) DO UPDATE SET password = EXCLUDED.password;
 
--- 4. Seed Data Mahasiswa (Gunakan subquery untuk mendapatkan ID User yang tepat)
+INSERT INTO "users" (email, password, role, is_approved) 
+VALUES ('stefanus@gmail.com', '$2a$10$vI8tmZH.AYVTrJ3BeWqRAux6Ka/8mp1icjHEwVG69.S8m.C94DGl.', 'mahasiswa', true)
+ON CONFLICT (email) DO UPDATE SET password = EXCLUDED.password;
+
 INSERT INTO "mahasiswa" (user_id, nim, nik, nama_lengkap, alamat_domisili, alamat_ktp, nama_orang_tua) 
 VALUES (
     (SELECT id FROM "users" WHERE email = 'john@gmail.com'), 
@@ -111,12 +110,37 @@ VALUES (
 INSERT INTO "mahasiswa" (user_id, nim, nik, nama_lengkap, alamat_domisili, alamat_ktp, nama_orang_tua, perguruan_tinggi, program_studi) 
 VALUES (
     (SELECT id FROM "users" WHERE email = 'faizal@gmail.com'), 
-    '2300018199', '9103012010040003', 'Faizal Putra Ramadhan', 'Jayapura', 'Jayapuran', 'Imam Subekti', 'Universitas Ahmad Dahlan', 'Informatika'
+    '2300018199', '9103012010040003', 'Faizal Putra Ramadhan', 'Jayapura', 'Jayapura', 'Imam Subekti', 'Universitas Ahmad Dahlan', 'Informatika'
 ) ON CONFLICT (nim) DO NOTHING;
 
--- 5. Seed Pendaftaran
 INSERT INTO "pendaftaran" (mahasiswa_id, program, status) 
 VALUES (
     (SELECT id FROM "mahasiswa" WHERE nim = '2021001'), 
     'A', 'submitted'
 ) ON CONFLICT DO NOTHING;
+
+INSERT INTO "mahasiswa" (user_id, nim, nik, nama_lengkap, alamat_domisili, alamat_ktp, nama_orang_tua, perguruan_tinggi, program_studi) 
+VALUES (
+    (SELECT id FROM "users" WHERE email = 'stefanus@gmail.com'), 
+    '2604600364', '910301151090004', 'Stefanus Mangge', 'Jayapura', 'Jayapura', 'Imam Subekti', 'Universitas Gadjah Mada', 'Kedokteran'
+) ON CONFLICT (nim) DO NOTHING;
+
+
+INSERT INTO "mahasiswa" (user_id, nim, nik, nama_lengkap, alamat_domisili, alamat_ktp, nama_orang_tua, perguruan_tinggi, program_studi) 
+VALUES (
+    (SELECT id FROM "users" WHERE email = 'nick@gmail.com'), 
+    '2022086016636', '9111023011910001', 'Nick Rawar', 'Jayapura', 'Jayapura', 'Musa Rawar', 'Universitas Cendrawasih', 'Kedokteran'
+) ON CONFLICT (nim) DO NOTHING; // co-ass
+
+INSERT INTO "mahasiswa" (user_id, nim, nik, nama_lengkap, alamat_domisili, alamat_ktp, nama_orang_tua, perguruan_tinggi, program_studi) 
+VALUES (
+    (SELECT id FROM "users" WHERE email = 'nick@gmail.com'), 
+    '-', '-', 'Anggie Freesia Maritje Kapisa', 'Jayapura', 'Jayapura', '-', 'Universitas Otago New Zeeland', 'Kedokteran'
+) ON CONFLICT (nim) DO NOTHING;
+
+INSERT INTO "mahasiswa" (user_id, nim, nik, nama_lengkap, alamat_domisili, alamat_ktp, nama_orang_tua, perguruan_tinggi, program_studi) 
+VALUES (
+    (SELECT id FROM "users" WHERE email = 'nick@gmail.com'), 
+    '202219011', '9120040107880020', 'Boy Ausa', 'Jayapura', 'Mamberamo Tengah Timur', '-', 'Universitas Sepuluh Nopember Papua', 'Hukum'
+) ON CONFLICT (nim) DO NOTHING;
+
